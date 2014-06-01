@@ -161,3 +161,10 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+MESSAGE( "---> NAVIGATION TEST <---" )
+if(EXISTS $ENV{WORKSPACE})
+  MESSAGE( "---> simulation <---" )# jenkins
+else(EXISTS $ENV{WORKSPACE})
+  MESSAGE( "---> real robot <---" )# somewhere else
+endif(EXISTS $ENV{WORKSPACE})
