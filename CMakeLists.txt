@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(my_navigation_test)
-
+ 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   cob_bringup_sim
   cob_navigation_global
-  navigation_test_skeleton
+#  navigation_test_skeleton
 )
 
 ## System dependencies are found with CMake's conventions
@@ -163,8 +163,9 @@ include_directories(
 # catkin_add_nosetests(test)
 
 MESSAGE( "---> NAVIGATION TEST <---" )
-if(EXISTS $ENV{WORKSPACE})
+if(EXISTS $ENV{WORKSPACE}) 
   MESSAGE( "---> simulation <---" )# jenkins
+  add_rostest(launch/my_test_4_cob.test)
 else(EXISTS $ENV{WORKSPACE})
   MESSAGE( "---> real robot <---" )# somewhere else
 endif(EXISTS $ENV{WORKSPACE})

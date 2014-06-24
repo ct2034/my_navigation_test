@@ -4,7 +4,7 @@
 	<arg name="sim"              value="true"/>
 
 	<arg name="navigation_pkg"   default="$(find cob_navigation_global)"/>
-	<arg name="navigation_arg"   default="2dnav_ros_tr"/>
+	<arg name="navigation_arg"   default="2dnav_ros_eband"/>
 
 	<arg name="robot"            default="cob3-6"/>
 	<arg name="moveBaseAction"   default="/move_base"/>
@@ -49,7 +49,7 @@
 			<arg name="bumperTopics"      value="$(arg bumperTopics)" />
 		</include>
 		<!-- gazebo ground-truth tf publisher -->
-		<include file="$( find gazebo_gt_tf_publisher )/launch/publisher.launch"/>
+		<include file="$( find gazebo_gt_tf_publisher )/launch/publisher.launch" />
 		<!-- start test skeleton -->
 		<include file="$( find navigation_test_skeleton )/launch/navigation.test">
 			<arg name="sim"               value="$( arg sim )" />
