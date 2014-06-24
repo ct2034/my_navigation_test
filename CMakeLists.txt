@@ -7,7 +7,8 @@ project(my_navigation_test)
 find_package(catkin REQUIRED COMPONENTS
   cob_bringup_sim
   cob_navigation_global
-#  navigation_test_skeleton
+  navigation_test_skeleton
+  rostest
 )
 
 ## System dependencies are found with CMake's conventions
@@ -153,19 +154,24 @@ include_directories(
 ## Testing ##
 #############
 
-## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_my_navigation_test.cpp)
-# if(TARGET ${PROJECT_NAME}-test)
-#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
-# endif()
+if(EXISTS $ENV{BAG_PATH}) #checking a basic condition
 
-## Add folders to be run by python nosetests
-# catkin_add_nosetests(test)
+  SET(ENV{TEST_NAVIGATION_ARG} "2dnav_ros_eband")
+  SET(ENV{TEST_ROBOT} "cob3-6")
+  SET(ENV{TEST_ROBOT_ENV} "ipa-kitchen")
+  SET(ENV{TEST_SCENARIO} "scene2")
 
-MESSAGE( "---> NAVIGATION TEST <---" )
-if(EXISTS $ENV{WORKSPACE}) 
-  MESSAGE( "---> simulation <---" )# jenkins
-  add_rostest(launch/my_test_4_cob.test)
-else(EXISTS $ENV{WORKSPACE})
-  MESSAGE( "---> real robot <---" )# somewhere else
-endif(EXISTS $ENV{WORKSPACE})
+  MESSAGE( "---> NAVIGATION TEST <---" )
+
+  if(EXISTS $ENV{WORKSPACE}) 
+    MESSAGE( "---> simulation <---" )# jenkins
+    add_rostest(launch/my_test_param.test)
+  else(EXISTS $ENV{WORKSPACE})
+    MESSAGE( "---> real robot <---" )# somewhere else
+  endif(EXISTS $ENV{WORKSPACE})
+
+else(EXISTS $ENV{BAG_PATH}) 
+
+  MESSAGE( FATAL_ERROR "---> ERROR: BAG_PATH NOT SET <---" )
+
+endif(EXISTS $ENV{BAG_PATH}) 

@@ -2,23 +2,23 @@
 <launch>
     <!-- 
     
-    This is supposed to be a testfile that accepts parameters for robot, environment and scene to use 
-    *************************************************************************************************
+    This is supposed to be a testfile that gets parameters for robot, environment and scene to use from envvars
+    ***********************************************************************************************************
     -->
 	<arg name="config_pkg"       value="$(find my_navigation_test)"/>
 	<arg name="sim"              value="true"/>
 
 	<arg name="navigation_pkg"   default="$(find cob_navigation_global)"/>
-	<arg name="navigation_arg"   /> <!-- no default value -->
+	<arg name="navigation_arg"   value="$(env TEST_NAVIGATION_ARG)"/> 
 
-	<arg name="robot"            default="cob3-6"/>
+	<arg name="robot"            default="$(env TEST_ROBOT)"/>
 	<arg name="moveBaseAction"   default="/move_base"/>
 	<arg name="bumperTopics"     default="[/base_bumper/state]" />
 
-	<arg name="robot_env"        /> <!-- no default value -->
+	<arg name="robot_env"        value="$(env TEST_ROBOT_ENV)"/>
 	<arg name="map"              default="$(find cob_default_env_config)/$(arg robot_env)/map.yaml"/>
 
-	<arg name="scenarioName"     /> <!-- no default value -->
+	<arg name="scenarioName"     value="$(env TEST_SCENARIO)"/>
 
 
 
