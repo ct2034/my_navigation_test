@@ -154,20 +154,54 @@ include_directories(
 ## Testing ##
 #############
 
+
+#variabels
+SET(TEST_NAVIGATION_ARGS 2dnav_ros_eband)
+SET(TEST_ROBOTS cob3-6 cob3-3)
+SET(TEST_ROBOT_ENVS ipa-kitchen)
+SET(TEST_SCENARIOS scene2)
+
 if(EXISTS $ENV{BAG_PATH}) #checking a basic condition
-
-  SET(ENV{TEST_NAVIGATION_ARG} "2dnav_ros_eband")
-  SET(ENV{TEST_ROBOT} "cob3-6")
-  SET(ENV{TEST_ROBOT_ENV} "ipa-kitchen")
-  SET(ENV{TEST_SCENARIO} "scene2")
-
-  MESSAGE( "---> NAVIGATION TEST <---" )
 
   if(EXISTS $ENV{WORKSPACE}) 
     MESSAGE( "---> simulation <---" )# jenkins
-    add_rostest(launch/my_test_param.test)
+    
+    #execution
+    MESSAGE( "---> NAVIGATION TEST <---" )
+    MESSAGE( "WITH" )
+    FOREACH(TEST_NAVIGATION_ARG ${TEST_NAVIGATION_ARGS})
+    
+      MESSAGE( "  TEST_NAVIGATION_ARG: ${TEST_NAVIGATION_ARG}" )
+      FOREACH(TEST_ROBOT ${TEST_ROBOTS})
+      
+        MESSAGE( "    TEST_ROBOT: ${TEST_ROBOT}" )
+        FOREACH(TEST_ROBOT_ENV ${TEST_ROBOT_ENVS})
+        
+          MESSAGE( "      TEST_ROBOT_ENV: ${TEST_ROBOT_ENV}" )
+          FOREACH(TEST_SCENARIO ${TEST_SCENARIOS})
+          
+            MESSAGE( "        TEST_SCENARIO: ${TEST_SCENARIO}" )
+            
+            add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO}")  
+            
+            #add_test(NAME ${TEST_ROBOT}_TARG COMMAND "rostest my_navigation_test my_test_param.test navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO}")  
+            
+            MESSAGE( "-------------------------" ) 
+          
+          ENDFOREACH(TEST_SCENARIO)
+          
+        ENDFOREACH(TEST_ROBOT_ENV)
+        
+      ENDFOREACH(TEST_ROBOT)
+      
+    ENDFOREACH(TEST_NAVIGATION_ARG)
+          
+    
+    #navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO})
   else(EXISTS $ENV{WORKSPACE})
+    
     MESSAGE( "---> real robot <---" )# somewhere else
+  
   endif(EXISTS $ENV{WORKSPACE})
 
 else(EXISTS $ENV{BAG_PATH}) 
