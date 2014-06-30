@@ -156,8 +156,8 @@ include_directories(
 
 
 #variabels
-SET(TEST_NAVIGATION_ARGS 2dnav_ros_eband)
-SET(TEST_ROBOTS cob3-6 cob3-3)
+SET(TEST_NAVIGATION_ARGS 2dnav_ros_eband 2dnav_ipa_eband)
+SET(TEST_ROBOTS cob3-6)
 SET(TEST_ROBOT_ENVS ipa-kitchen)
 SET(TEST_SCENARIOS scene2)
 SET(TEST_SIM true)
@@ -189,10 +189,18 @@ if(CATKIN_ENABLE_TESTING)
           
             MESSAGE( "        TEST_SCENARIO: ${TEST_SCENARIO}" )
             
-            add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SCIM}")  
+            if(${TEST_NAVIGATION_ARG} MATCHES "ipa")
             
-            #add_test(NAME ${TEST_ROBOT}_TARG COMMAND "rostest my_navigation_test my_test_param.test navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO}")  
+              MESSAGE("++++++++++++++++++++++++++++++ IPA")
+              add_rostest(launch/my_test_param_ipa.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM}")  
             
+            else(${TEST_NAVIGATION_ARG} MATCHES "ipa") 
+            
+              MESSAGE("++++++++++++++++++++++++++++++ COB")
+              add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM}")  
+            
+            endif(${TEST_NAVIGATION_ARG} MATCHES "ipa")
+                       
             MESSAGE( "-------------------------" ) 
           
           ENDFOREACH(TEST_SCENARIO)
