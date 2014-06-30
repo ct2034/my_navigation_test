@@ -161,7 +161,13 @@ SET(TEST_ROBOTS cob3-6 cob3-3)
 SET(TEST_ROBOT_ENVS ipa-kitchen)
 SET(TEST_SCENARIOS scene2)
 
-if(EXISTS $ENV{BAG_PATH}) #checking a basic condition
+if(CATKIN_ENABLE_TESTING)
+
+  if(NOT EXISTS $ENV{BAG_PATH}) #checking a basic condition
+  
+  MESSAGE( FATAL_ERROR "---> ERROR: BAG_PATH NOT SET <---" )
+
+  endif(EXISTS $ENV{BAG_PATH}) 
 
   if(EXISTS $ENV{WORKSPACE}) 
     MESSAGE( "---> simulation <---" )# jenkins
@@ -204,8 +210,4 @@ if(EXISTS $ENV{BAG_PATH}) #checking a basic condition
   
   endif(EXISTS $ENV{WORKSPACE})
 
-else(EXISTS $ENV{BAG_PATH}) 
-
-  MESSAGE( FATAL_ERROR "---> ERROR: BAG_PATH NOT SET <---" )
-
-endif(EXISTS $ENV{BAG_PATH}) 
+endif(CATKIN_ENABLE_TESTING)
