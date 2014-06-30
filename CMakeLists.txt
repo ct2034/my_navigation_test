@@ -166,11 +166,11 @@ if(CATKIN_ENABLE_TESTING)
 
   if(NOT EXISTS $ENV{BAG_PATH}) #checking a basic condition
   
-  MESSAGE( FATAL_ERROR "---> ERROR: BAG_PATH NOT SET <---" )
+    MESSAGE( FATAL_ERROR "---> ERROR: BAG_PATH NOT SET <---" )
 
-  endif(EXISTS $ENV{BAG_PATH}) 
+  endif(NOT EXISTS $ENV{BAG_PATH}) 
 
-  if(EXISTS $ENV{WORKSPACE}) 
+  if(${TEST_SIM}) 
     MESSAGE( "---> simulation <---" )# jenkins
     
     #execution
@@ -189,7 +189,7 @@ if(CATKIN_ENABLE_TESTING)
           
             MESSAGE( "        TEST_SCENARIO: ${TEST_SCENARIO}" )
             
-            add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO}")  
+            add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SCIM}")  
             
             #add_test(NAME ${TEST_ROBOT}_TARG COMMAND "rostest my_navigation_test my_test_param.test navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO}")  
             
@@ -205,10 +205,10 @@ if(CATKIN_ENABLE_TESTING)
           
     
     #navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO})
-  else(EXISTS $ENV{WORKSPACE})
+  else(${TEST_SIM})
     
     MESSAGE( "---> real robot <---" )# somewhere else
   
-  endif(EXISTS $ENV{WORKSPACE})
+  endif(${TEST_SIM})
 
 endif(CATKIN_ENABLE_TESTING)
