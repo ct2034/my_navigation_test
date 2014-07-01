@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="config_pkg"       value="$(find my_navigation_test)"/>
+	<arg name="sim"              value="true" />
+
+	<arg name="navigation"       default="2dnav_ros_dwa"/>
+
+	<arg name="robot"            default="cob3-3"/>
+	<arg name="moveBaseAction"   default="/move_base"/>
+	<arg name="bumperTopics"     default="[/base_bumper/state]" />
+
+	<arg name="robot_env"        default="ipa-apartment"/>
+	<arg name="map"              default="$(find cob_default_env_config)/$(arg robot_env)/map.yaml"/>
+
+	<arg name="scenarioName"     default="scene2"/>
+
+
+
+	<!-- ###################### -->
+	<!-- start robot simulation -->
+	<!-- ###################### -->
+	<node name="gazeboExceptionExpecter" pkg="navigation_test_helper" type="gazeboExceptionExpecter.py" output="screen">
+		<param name="robot"     value="$( arg robot )" />
+		<param name="robot_env" value="$( arg robot_env )" />
+	</node>
+	<!--include file="$( find ipa_tests_sim )/launch/table.launch" /-->
+
+
+</launch>
+
