@@ -164,11 +164,11 @@ SET(TEST_SIM true)
 
 if(CATKIN_ENABLE_TESTING)
 
-  if(NOT EXISTS $ENV{BAG_PATH}) #checking a basic condition
+  if(NOT (EXISTS $ENV{BAG_PATH})) #checking a basic condition
   
     MESSAGE( FATAL_ERROR "---> ERROR: BAG_PATH NOT SET <---" )
 
-  endif(NOT EXISTS $ENV{BAG_PATH}) 
+  endif(NOT (EXISTS $ENV{BAG_PATH})) 
 
   if(${TEST_SIM}) 
     MESSAGE( "---> simulation <---" )# jenkins
