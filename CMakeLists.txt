@@ -32,7 +32,7 @@ SET(TEST_SIM true)
 
 if(NOT (EXISTS $ENV{BAG_PATH})) #checking bag path for usability
 
-  MESSAGE(WARNING "---> ERROR: BAG_PATH NOT SET <---" )
+  MESSAGE(WARNING "---> WARNING: BAG_PATH NOT SET <---" )
 
 endif(NOT (EXISTS $ENV{BAG_PATH})) 
 
