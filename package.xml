@@ -43,10 +43,12 @@
   <build_depend>cob_bringup_sim</build_depend>
   <build_depend>cob_navigation_global</build_depend>
   <build_depend>navigation_test_skeleton</build_depend>
+  <build_depend>navigation_test_helper</build_depend>
   <build_depend>rostest</build_depend>
   <run_depend>cob_bringup_sim</run_depend>
   <run_depend>cob_navigation_global</run_depend>
   <run_depend>navigation_test_skeleton</run_depend>
+  <run_depend>navigation_test_helper</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
