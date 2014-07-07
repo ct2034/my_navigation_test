@@ -23,7 +23,7 @@ include_directories(
 
 #variabels to be defined here
 #................................................................
-SET(TEST_NAVIGATION_ARGS 2dnav_ipa_eband)
+SET(TEST_NAVIGATION_ARGS 2dnav_ros_eband)
 SET(TEST_ROBOTS cob3-6 cob3-3)
 SET(TEST_ROBOT_ENVS ipa-kitchen)
 SET(TEST_SCENARIOS scene2 scene1)
