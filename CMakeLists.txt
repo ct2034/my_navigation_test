@@ -65,11 +65,10 @@ FOREACH(TEST_NAVIGATION_ARG ${TEST_NAVIGATION_ARGS})
         else(${TEST_NAVIGATION_ARG} MATCHES "ipa") 
           MESSAGE("        (A COB/ROS TEST)")
           SET(TEST_NAVIGATION_IPA false)   
-          #add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM}")  
         
         endif(${TEST_NAVIGATION_ARG} MATCHES "ipa")
         
-        add_rostest(launch/my_test_param_ipa.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} navigation_ipa:=${TEST_NAVIGATION_IPA} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM} ") 
+        add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} navigation_ipa:=${TEST_NAVIGATION_IPA} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM} ") 
                    
         MESSAGE( "-------------------------" ) 
       
