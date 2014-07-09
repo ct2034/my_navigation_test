@@ -6,20 +6,21 @@
     ***********************************************************************************************************
     -->
 	<arg name="config_pkg"       value="$(find my_navigation_test)"/>
-	<arg name="sim"              />
+	<arg name="sim"              /> <!-- this is boolean and controls wether simulation is started ora a real robot is present -->
 
-	<arg name="navigation_pkg"   value="$(find cob_navigation_global)"/>
-	<arg name="navigation_arg"   /><!--default="$(env TEST_NAVIGATION_ARG)" /-->
+	<arg name="navigation_arg"   /> <!-- this should contain the argument, which launchfile should be started -->
+	<arg name="navigation_ipa"   /> <!-- this should be true if ipa navigation is wanted (is calculated from the above in CMakeLists, but cant be checked here) -->
+	<arg name="navigation_pkg"   value="$(find ipa_navigation_bringup)" if="$(arg navigation_ipa)"/>     <!-- depends on boolean arg navigation_ipa above -->
+	<arg name="navigation_pkg"   value="$(find cob_navigation_global)" unless="$(arg navigation_ipa)"/>  <!-- depends on boolean arg navigation_ipa above -->
 
-	<arg name="robot"            /><!--default="$(env TEST_ROBOT)"/-->
+	<arg name="robot"            /> <!-- this should contain the robot, e.g. cob3-3 -->
 	<arg name="moveBaseAction"   default="/move_base"/>
 	<arg name="bumperTopics"     default="[/base_bumper/state]" />
 
-	<arg name="robot_env"        /><!--default="$(env TEST_ROBOT_ENV)"/-->
+	<arg name="robot_env"        /> <!-- this should contain the environment, e.g. ipa-kitchen -->
 	<arg name="map"              default="$(find cob_default_env_config)/$(arg robot_env)/map.yaml"/>
 
-	<arg name="scenarioName"     /><!--default="$(env TEST_SCENARIO)"/-->
-
+	<arg name="scenarioName"     /> <!-- this should contain the scenario, e.g. scene1, corresponding to a yaml file in config folder of this test package -->
 
 
 	<!-- ###################### -->
