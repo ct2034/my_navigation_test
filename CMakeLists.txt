@@ -9,7 +9,6 @@ find_package(catkin REQUIRED COMPONENTS
   rostest
 )
 
-
 catkin_package(
 )
 
@@ -26,7 +25,7 @@ include_directories(
 SET(TEST_NAVIGATION_ARGS 2dnav_ros_eband 2dnav_ipa_eband)
 SET(TEST_ROBOTS cob3-6 cob3-3)
 SET(TEST_ROBOT_ENVS ipa-kitchen)
-SET(TEST_SCENARIOS scene2 scene1)
+SET(TEST_SCENARIOS scene2)
 SET(TEST_SIM true)
 #''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
