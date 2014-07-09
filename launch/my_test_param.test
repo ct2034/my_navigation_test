@@ -8,7 +8,7 @@
 	<arg name="config_pkg"       value="$(find my_navigation_test)"/>
 	<arg name="sim"              />
 
-	<arg name="navigation_pkg"   default="$(find cob_navigation_global)"/>
+	<arg name="navigation_pkg"   value="$(find cob_navigation_global)"/>
 	<arg name="navigation_arg"   /><!--default="$(env TEST_NAVIGATION_ARG)" /-->
 
 	<arg name="robot"            /><!--default="$(env TEST_ROBOT)"/-->
@@ -61,8 +61,12 @@
 		<include file="$( find navigation_test_collision_detection )/launch/collision_detection.launch">
 			<arg name="bumperTopics"      value="$(arg bumperTopics)" />
 		</include>
+		
 		<!-- gazebo ground-truth tf publisher -->
-		<include file="$( find gazebo_gt_tf_publisher )/launch/publisher.launch" />
+		<include file="$( find gazebo_gt_tf_publisher )/launch/publisher.launch" if="$(arg sim)"/>
+		<!-- nav ground-truth tf publisher -->
+		<include file="$( find nav_ground_truth_publisher )/launch/ground_truth.launch" unless="$(arg sim)"/>
+		
 		<!-- start test skeleton -->
 		<include file="$( find navigation_test_skeleton )/launch/navigation.test">
 			<arg name="sim"               value="$( arg sim )" />
