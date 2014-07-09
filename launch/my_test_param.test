@@ -25,11 +25,19 @@
 	<!-- ###################### -->
 	<!-- start robot simulation -->
 	<!-- ###################### -->
-	<include file="$(find cob_bringup_sim )/launch/robot.launch">
+	<include file="$(find cob_bringup_sim )/launch/robot.launch" if="$( arg sim )">
 		<arg name="robot"     value="$( arg robot )" />
 		<arg name="robot_env" value="$( arg robot_env )" />
 	</include>
 	<!--include file="$( find ipa_tests_sim )/launch/table.launch" /-->
+	
+	<!-- ################ -->
+	<!-- start real robot -->
+	<!-- ################ -->
+	<include file="$(find cob_bringup )/launch/robot.launch" unless="$( arg sim )"> 	<!-- ?!?!?!?!?!? -->
+		<arg name="robot"     value="$( arg robot )" />
+		<arg name="robot_env" value="$( arg robot_env )" />
+	</include>
 
 	<!-- ################ -->
 	<!-- start navigation -->
@@ -43,12 +51,12 @@
 	<!-- ####################### -->
 	<!-- execute navigation test -->
 	<!-- ####################### -->
-	<group ns="/navigation_test" >
+	<group ns="/navigation_test">
 		<rosparam file="$(arg config_pkg)/config/$(arg scenarioName).yaml" command="load" />
 		<rosparam file="$(arg config_pkg)/config/prepare_robot_$(arg robot).yaml" command="load" />
 		<param name="moveBaseAction"      value="$(arg moveBaseAction)" />
 		<!-- prepare robot service server -->
-		<node name="navigation_test_prepare_robot_simulation" pkg="navigation_test_prepare_robot" type="prepareRobot.py" output="screen"/>
+		<node name="navigation_test_prepare_robot_simulation" pkg="navigation_test_prepare_robot" type="prepareRobot.py" output="screen" if="$( arg sim )"/>
 		<!-- start collision detection -->
 		<include file="$( find navigation_test_collision_detection )/launch/collision_detection.launch">
 			<arg name="bumperTopics"      value="$(arg bumperTopics)" />
