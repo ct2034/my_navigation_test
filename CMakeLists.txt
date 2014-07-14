@@ -16,9 +16,9 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-#############
-## Testing ##
-#############
+#########################
+## Testing: Parameters ##
+#########################
 
 #variabels to be defined here
 #................................................................
@@ -35,56 +35,39 @@ if(NOT (EXISTS $ENV{BAG_PATH})) #checking bag path for usability
 
 endif(NOT (EXISTS $ENV{BAG_PATH})) 
 
-if(${TEST_SIM}) 
-#########################
-## Testing: Simulation ##
-#########################
-MESSAGE( "---> simulation <---" )# jenkins
+########################
+## Testing: Execution ##
+########################
 
-#execution
-MESSAGE( "---> NAVIGATION TEST <---" )
-MESSAGE( "WITH" )
 FOREACH(TEST_NAVIGATION_ARG ${TEST_NAVIGATION_ARGS})
-
-  MESSAGE( "  TEST_NAVIGATION_ARG: ${TEST_NAVIGATION_ARG}" )
   FOREACH(TEST_ROBOT ${TEST_ROBOTS})
-  
-    MESSAGE( "    TEST_ROBOT: ${TEST_ROBOT}" )
     FOREACH(TEST_ROBOT_ENV ${TEST_ROBOT_ENVS})
-    
-      MESSAGE( "      TEST_ROBOT_ENV: ${TEST_ROBOT_ENV}" )
       FOREACH(TEST_SCENARIO ${TEST_SCENARIOS})
+       
+      MESSAGE( "---> A NAVIGATION TEST <---" )
+      if(${TEST_SIM}) 
+        MESSAGE( "in simulation" )# jenkins
+      else(${TEST_SIM})
+        MESSAGE( "!! ON THE ROBOT !!" )# somewhere else
+      endif(${TEST_SIM})
+      MESSAGE( "with" )
+      MESSAGE( "  TEST_NAVIGATION_ARG: ${TEST_NAVIGATION_ARG}" )
+      MESSAGE( "    TEST_ROBOT: ${TEST_ROBOT}" )
+      MESSAGE( "      TEST_ROBOT_ENV: ${TEST_ROBOT_ENV}" )
+      MESSAGE( "        TEST_SCENARIO: ${TEST_SCENARIO}" )
+      if(${TEST_NAVIGATION_ARG} MATCHES "ipa")
+        MESSAGE("        (AN IPA TEST)")
+        SET(TEST_NAVIGATION_IPA true)   
+      else(${TEST_NAVIGATION_ARG} MATCHES "ipa") 
+        MESSAGE("        (A COB/ROS TEST)")
+        SET(TEST_NAVIGATION_IPA false)  
+      endif(${TEST_NAVIGATION_ARG} MATCHES "ipa")
       
-        MESSAGE( "        TEST_SCENARIO: ${TEST_SCENARIO}" )
-        
-        if(${TEST_NAVIGATION_ARG} MATCHES "ipa")
-          MESSAGE("        (AN IPA TEST)")
-          SET(TEST_NAVIGATION_IPA true)       
-           
-        else(${TEST_NAVIGATION_ARG} MATCHES "ipa") 
-          MESSAGE("        (A COB/ROS TEST)")
-          SET(TEST_NAVIGATION_IPA false)   
-        
-        endif(${TEST_NAVIGATION_ARG} MATCHES "ipa")
-        
-        add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} navigation_ipa:=${TEST_NAVIGATION_IPA} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM} ") 
+      add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} navigation_ipa:=${TEST_NAVIGATION_IPA} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM} ") 
                    
-        MESSAGE( "-------------------------" ) 
+      MESSAGE( "-------------------------" ) 
       
       ENDFOREACH(TEST_SCENARIO)
-      
     ENDFOREACH(TEST_ROBOT_ENV)
-    
-  ENDFOREACH(TEST_ROBOT)
-  
+  ENDFOREACH(TEST_ROBOT)  
 ENDFOREACH(TEST_NAVIGATION_ARG)
-      
-else(${TEST_SIM})
-####################
-## Testing: Robot ##
-####################
-MESSAGE( "---> real robot <---" )# somewhere else
-
- add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} navigation_ipa:=${TEST_NAVIGATION_IPA} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM} ") 
-
-endif(${TEST_SIM})
