@@ -66,7 +66,7 @@ FOREACH(TEST_NAVIGATION_ARG ${TEST_NAVIGATION_ARGS})
       add_rostest(launch/my_test_param.test ARGS "navigation_arg:=${TEST_NAVIGATION_ARG} navigation_ipa:=${TEST_NAVIGATION_IPA} robot:=${TEST_ROBOT} robot_env:=${TEST_ROBOT_ENV} scenarioName:=${TEST_SCENARIO} sim:=${TEST_SIM} ") 
                    
       MESSAGE( "-------------------------" ) 
-      
+       
       ENDFOREACH(TEST_SCENARIO)
     ENDFOREACH(TEST_ROBOT_ENV)
   ENDFOREACH(TEST_ROBOT)  
