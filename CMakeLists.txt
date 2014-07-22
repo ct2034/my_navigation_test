@@ -22,8 +22,8 @@ include_directories(
 
 #variabels to be defined here
 #................................................................
-SET(TEST_NAVIGATION_ARGS 2dnav_ipa_eband)
-SET(TEST_ROBOTS raw3-4)
+SET(TEST_NAVIGATION_ARGS 2dnav_ipa_eband 2dnav_ros_eband)
+SET(TEST_ROBOTS raw3-4 cob3-6)
 SET(TEST_ROBOT_ENVS ipa-kitchen)
 SET(TEST_SCENARIOS scene_doku)
 SET(TEST_SIM true)
